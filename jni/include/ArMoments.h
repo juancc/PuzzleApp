@@ -56,9 +56,6 @@ class ArMoments
         int blurFact;
 
         Mat parts;
-
-
-
         Mat *partsImg; //array containing al the images of the training
         Mat assemblyStatus; // displayed image of how the assembly goes
 

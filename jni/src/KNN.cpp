@@ -1,18 +1,13 @@
 #include"../include/KNN.h"
 
-
-
 void KnnSimple::train(double *descriptor, string className, int descSize){
     cout<< "--ADDING OBJECT-- " << className << endl;
     this->descSize = descSize;
     classes.push_back(className);
-
     double *arr = new double[descSize];
     for(unsigned int i=0; i<descSize; i++ ){
         arr[i] = descriptor[i];
     }
-
-
     descriptors.push_back(arr);
 }
 
@@ -20,6 +15,7 @@ void KnnSimple::train(double *descriptor, string className, int descSize){
 vector<double*> KnnSimple::getDesc(){
     return descriptors;
 }
+
 
 void KnnSimple::printDatabase(){
     cout << "  --PRINTING KNN DATABASE--" << endl;
@@ -29,20 +25,16 @@ void KnnSimple::printDatabase(){
             cout << "  - " << descriptors[i][j] << endl;
         }
     }
-
 }
 
 
 string KnnSimple::findNearest(double* query, double &dst){
     //cout<<"  --Finding KNN nearest--" << endl;
-
     double dist[classes.size()];//distance of the objects
-
     //calculate distances
     for(unsigned int i=0; i< classes.size(); i++){
         dist[i] = euclideanDist(query, descriptors[i]);
     }
-
     //get the index with the smalles distance
     int idx=0;//closets index
     double sDist = dist[0]; //smalles dist
@@ -59,22 +51,22 @@ string KnnSimple::findNearest(double* query, double &dst){
     return classes[idx];
 }
 
-//compare the moments of the specified class with the query
-double KnnSimple::isThis(int classNo, double* query){
 
+double KnnSimple::isThis(int classNo, double* query){
+    //compare the moments of the specified class with the query
     return euclideanDist(query, descriptors[classNo]);
 }
 
 
-//return the name of a class based on the index
 string KnnSimple::getName(int classIdx){
+    //return the name of a class based on the index
     return classes[classIdx];
 }
 
 
-//calculates eucludean distance of a multiple dimension vector. The number of dimensions
-// have to be explicit in the training
 double KnnSimple::euclideanDist(double* query, double* descriptor){
+    //calculates eucludean distance of a multiple dimension vector. The number of dimensions
+    // have to be explicit in the training
     double distTemp =0;
     for (unsigned int j=0; j< descSize -1; j++){
         distTemp += pow((query[j] - descriptor[j]), 2);
